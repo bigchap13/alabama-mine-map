@@ -332,6 +332,32 @@ def create_app():
             return jsonify({"error": "mine not found"}), 404
         return jsonify(mine)
 
+    @app.route("/api/county-coverage")
+    def api_county_coverage():
+        mines = load_json(REGISTRIES["mines"])
+        all_counties = sorted({
+            r.get("county")
+            for r in mines
+            if r.get("county")
+        })
+
+        mapped_points = mine_map_points()
+        mapped_counties = sorted({
+            r.get("county")
+            for r in mapped_points
+            if r.get("county")
+        })
+
+        unmapped_counties = sorted(set(all_counties) - set(mapped_counties))
+
+        return jsonify({
+            "all_registry_counties": len(all_counties),
+            "mapped_counties": len(mapped_counties),
+            "unmapped_counties": len(unmapped_counties),
+            "unmapped_county_names": unmapped_counties,
+            "mapped_county_names": mapped_counties,
+        })
+
     @app.route("/api/status")
     def api_status():
         mines = load_json(REGISTRIES["mines"])
