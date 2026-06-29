@@ -1,4 +1,4 @@
-# Walker County Mining Roadmap
+# Alabama Mine Map Roadmap
 
 ## Phase 1 — Foundation
 

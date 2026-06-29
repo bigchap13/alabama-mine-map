@@ -191,7 +191,7 @@ def create_app():
     @app.route("/api/status")
     def api_status():
         return jsonify({
-            "app": "Walker County Mining",
+            "app": "Alabama Mine Map",
             "status": "foundation",
             "port": 5084,
             "counts": registry_counts()
@@ -211,6 +211,6 @@ def create_app():
 
     @app.route("/health")
     def health():
-        return jsonify({"status": "ok", "project": "walker-county-mining"})
+        return jsonify({"status": "ok", "project": "alabama-mine-map"})
 
     return app
