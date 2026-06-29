@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+ATLAS_ROOT = Path.home() / "walker-county-atlas"
 
 REGISTRIES = {
     "mines": ROOT / "data/mines/mine_registry.json",
@@ -14,6 +15,7 @@ REGISTRIES = {
     "sources": ROOT / "data/sources/source_index.json",
 }
 
+
 def load_json(path):
     if not path.exists():
         return []
@@ -22,8 +24,10 @@ def load_json(path):
     except Exception:
         return []
 
+
 def registry_counts():
     return {name: len(load_json(path)) for name, path in REGISTRIES.items()}
+
 
 def all_records():
     records = []
@@ -34,6 +38,7 @@ def all_records():
                 x["section"] = section
                 records.append(x)
     return records
+
 
 def search_records(q):
     q = (q or "").strip().lower()
@@ -47,6 +52,102 @@ def search_records(q):
             results.append(item)
     return results
 
+
+def _find_atlas_record(atlas_id):
+    if not atlas_id:
+        return None
+
+    registry = ATLAS_ROOT / "data" / "registry"
+    if not registry.exists():
+        return None
+
+    for p in registry.rglob("*.json"):
+        if "_before_" in p.name:
+            continue
+        try:
+            data = json.loads(p.read_text())
+        except Exception:
+            continue
+
+        records = data if isinstance(data, list) else [data]
+        for rec in records:
+            if isinstance(rec, dict) and rec.get("id") == atlas_id:
+                return rec
+
+    return None
+
+
+def _coord_value(record, keys):
+    for key in keys:
+        value = record.get(key)
+        if value not in (None, ""):
+            try:
+                return float(value)
+            except Exception:
+                pass
+    return None
+
+
+def _extract_coords(record):
+    if not isinstance(record, dict):
+        return None
+
+    lat = _coord_value(record, ["lat", "latitude", "Latitude"])
+    lon = _coord_value(record, ["lon", "lng", "longitude", "Longitude"])
+
+    if lat is not None and lon is not None:
+        return lat, lon
+
+    coords = record.get("coordinates") or record.get("coords") or record.get("location")
+    if isinstance(coords, dict):
+        lat = _coord_value(coords, ["lat", "latitude", "Latitude"])
+        lon = _coord_value(coords, ["lon", "lng", "longitude", "Longitude"])
+        if lat is not None and lon is not None:
+            return lat, lon
+
+    if isinstance(coords, list) and len(coords) >= 2:
+        try:
+            a = float(coords[0])
+            b = float(coords[1])
+            if -90 <= a <= 90 and -180 <= b <= 180:
+                return a, b
+            if -90 <= b <= 90 and -180 <= a <= 180:
+                return b, a
+        except Exception:
+            pass
+
+    return None
+
+
+def mining_map_points():
+    points = []
+
+    for item in load_json(REGISTRIES["coal_camps"]):
+        atlas_id = item.get("atlas_place_id")
+        atlas_record = _find_atlas_record(atlas_id)
+        coords = _extract_coords(atlas_record or {})
+
+        if not coords:
+            continue
+
+        lat, lon = coords
+        points.append({
+            "id": item.get("id"),
+            "name": item.get("name"),
+            "type": item.get("type"),
+            "summary": item.get("summary"),
+            "lat": lat,
+            "lon": lon,
+            "atlas_place_id": atlas_id,
+            "atlas_url": item.get("atlas_url"),
+            "almanac_url": item.get("almanac_url"),
+            "research_status": item.get("research_status"),
+            "source": "Walker County Atlas coordinates + Walker County Almanac mining-linked record",
+        })
+
+    return points
+
+
 def create_app():
     app = Flask(
         __name__,
@@ -57,6 +158,10 @@ def create_app():
     @app.route("/")
     def index():
         return render_template("index.html", counts=registry_counts())
+
+    @app.route("/map")
+    def map_page():
+        return render_template("map.html")
 
     @app.route("/api/status")
     def api_status():
@@ -70,6 +175,10 @@ def create_app():
     @app.route("/api/search")
     def api_search():
         return jsonify(search_records(request.args.get("q", "")))
+
+    @app.route("/api/map-points")
+    def api_map_points():
+        return jsonify(mining_map_points())
 
     @app.route("/health")
     def health():
