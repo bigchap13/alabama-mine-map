@@ -19,5 +19,16 @@
     "publisher": "University of Alabama",
     "type": "historical-map-collection",
     "status": "priority_source"
+  },
+  {
+    "id": "source-msha-mines-dataset",
+    "title": "MSHA Mines Dataset",
+    "publisher": "Mine Safety and Health Administration",
+    "url": "https://arlweb.msha.gov/opengovernmentdata/DataSets/Mines.zip",
+    "definition_url": "https://arlweb.msha.gov/OpenGovernmentData/DataSets/Mines_Definition_File.txt",
+    "type": "official-federal-mine-dataset",
+    "notes": "Lists coal and metal/non-metal mines under MSHA jurisdiction, including status, operator, county, mine type, and coordinates where available.",
+    "status": "active_source",
+    "last_checked": "2026-06-29"
   }
 ]
