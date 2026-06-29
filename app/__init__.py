@@ -156,21 +156,40 @@ def company_mines(company):
 
 
 def company_index():
-    counts = {}
+    companies = {}
+
     for r in load_json(REGISTRIES["mines"]):
         for name in [r.get("operator"), r.get("controller")]:
             if not name:
                 continue
-            counts[name] = counts.get(name, 0) + 1
 
-    return [
-        {
-            "name": name,
-            "slug": company_slug(name),
-            "count": count,
-        }
-        for name, count in sorted(counts.items(), key=lambda x: (-x[1], x[0]))
-    ]
+            slug = company_slug(name)
+            if not slug:
+                continue
+
+            if slug not in companies:
+                companies[slug] = {
+                    "name": name,
+                    "slug": slug,
+                    "count": 0,
+                    "aliases": set(),
+                }
+
+            companies[slug]["count"] += 1
+            companies[slug]["aliases"].add(name)
+
+    out = []
+    for item in companies.values():
+        aliases = sorted(item["aliases"])
+        out.append({
+            "name": item["name"],
+            "slug": item["slug"],
+            "count": item["count"],
+            "aliases": aliases,
+            "alias_count": len(aliases),
+        })
+
+    return sorted(out, key=lambda x: (-x["count"], x["name"]))
 
 
 def company_stats(records):
