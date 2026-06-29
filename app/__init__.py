@@ -237,8 +237,11 @@ def create_app():
 
     @app.route("/companies")
     def companies_page():
-        companies = company_index()
-        return render_template("companies.html", companies=companies)
+        return render_template("companies.html")
+
+    @app.route("/api/companies")
+    def api_companies():
+        return jsonify(company_index())
 
     @app.route("/company/<company>")
     def company_page(company):

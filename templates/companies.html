@@ -17,19 +17,21 @@
     <section class="hero">
       <p class="eyebrow">Operator and controller index</p>
       <h1>Mining Companies</h1>
-      <p>Operators and controllers connected to source-backed Alabama mine records.</p>
+      <p>Search operators and controllers connected to source-backed Alabama mine records.</p>
+    </section>
+
+    <section class="card map-controls">
+      <input id="companySearch" type="search" placeholder="Search company, operator, controller...">
     </section>
 
     <section class="card">
       <span>Companies</span>
-      <h2>{{ companies|length }} names</h2>
-      {% for c in companies %}
-        <a class="map-record mine-row" href="/company/{{ c.slug }}">
-          <strong>{{ c.name }}</strong>
-          <small>{{ c.count }} linked mine records</small>
-        </a>
-      {% endfor %}
+      <h2 id="companyCount">Loading...</h2>
+      <p id="companyNote">Showing top companies first. Use search for the full index.</p>
+      <div id="companyList"></div>
     </section>
   </main>
+
+  <script src="/static/js/companies.js"></script>
 </body>
 </html>
