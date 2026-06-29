@@ -21,6 +21,13 @@
       <p>This map plots only sourced mine names and mine coordinates. Communities are excluded.</p>
     </section>
 
+    <section class="card map-controls">
+      <input id="mineSearch" type="search" placeholder="Search mine, operator, county...">
+      <select id="countyFilter"></select>
+      <select id="statusFilter"></select>
+      <select id="typeFilter"></select>
+    </section>
+
     <section class="map-shell">
       <div id="mineMap"></div>
     </section>
@@ -29,6 +36,12 @@
       <span>Mine Records</span>
       <h2 id="mineCount">Checking...</h2>
       <p id="mineNote">Loading exact mine-location records.</p>
+      <div class="legend">
+        <span><b class="dot active"></b>Active</span>
+        <span><b class="dot nonproducing"></b>NonProducing</span>
+        <span><b class="dot abandoned"></b>Abandoned</span>
+        <span><b class="dot unknown"></b>Other</span>
+      </div>
       <div id="mineList"></div>
     </section>
   </main>
