@@ -1,0 +1,23 @@
+[
+  {
+    "id": "source-alabama-mine-map-repository",
+    "title": "Alabama Mine Map Repository",
+    "publisher": "Alabama Department of Labor",
+    "type": "mine-map-repository",
+    "status": "priority_source"
+  },
+  {
+    "id": "source-alabama-surface-mining-commission",
+    "title": "Alabama Surface Mining Commission",
+    "publisher": "State of Alabama",
+    "type": "surface-mining-records",
+    "status": "priority_source"
+  },
+  {
+    "id": "source-university-of-alabama-historical-maps",
+    "title": "University of Alabama Historical Maps",
+    "publisher": "University of Alabama",
+    "type": "historical-map-collection",
+    "status": "priority_source"
+  }
+]
