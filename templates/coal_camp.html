@@ -41,24 +41,35 @@
           <h2>{{ camp.railroad or "Unknown" }}</h2>
         </div>
         <div class="card">
-          <span>Status</span>
-          <h2>{{ camp.status or "Unknown" }}</h2>
+          <span>Linked Mines</span>
+          <h2>{{ camp.linked_mine_count or 0 }}</h2>
         </div>
       </section>
 
       <section class="card wide">
-        <span>Linked Mines</span>
-        {% for mine in camp.mines or [] %}
-          <a class="map-record mine-row" href="/mine/{{ mine }}">{{ mine }}</a>
+        <span>MSHA Mine Links</span>
+        <h2>{{ camp.mapped_mine_count or 0 }} mapped mine records</h2>
+        {% for mine in camp.linked_mines or [] %}
+          <a class="map-record mine-row" href="/mine/{{ mine.id }}">
+            <strong>{{ mine.name }}</strong>
+            <small>{{ mine.mine_type or "Mine" }} • {{ mine.status or "Unknown" }} • {{ mine.operator or "Unknown operator" }}</small>
+          </a>
         {% else %}
-          <p>No linked mine records yet.</p>
+          <p>No linked MSHA mine records yet.</p>
         {% endfor %}
       </section>
 
       <section class="card wide">
         <span>Sources</span>
         {% for source in camp.sources or [] %}
-          <p>{{ source }}</p>
+          {% if source.url %}
+            <a class="map-record mine-row" href="{{ source.url }}">
+              <strong>{{ source.title }}</strong>
+              <small>{{ source.publisher or "Source" }}</small>
+            </a>
+          {% else %}
+            <p>{{ source }}</p>
+          {% endif %}
         {% else %}
           <p>No source entries loaded.</p>
         {% endfor %}
