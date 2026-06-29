@@ -1,1 +1,73 @@
-[]
+[
+  {
+    "id": "company-corona-coal-company",
+    "name": "Corona Coal Company",
+    "type": "mining-company",
+    "county_context": "Walker County, Alabama",
+    "summary": "Corona Coal Company is referenced in existing Walker County Almanac mining-related community records.",
+    "linked_communities": [
+      {
+        "community": "Coal Valley",
+        "article_id": "community-coal-valley",
+        "url": "http://127.0.0.1:5081/article/community-coal-valley"
+      },
+      {
+        "community": "Corona",
+        "article_id": "community-corona",
+        "url": "http://127.0.0.1:5081/article/community-corona"
+      },
+      {
+        "community": "Townley",
+        "article_id": "community-townley",
+        "url": "http://127.0.0.1:5081/article/community-townley"
+      }
+    ],
+    "evidence_basis": "Company name appears in existing Almanac article text or tags.",
+    "research_status": "source_backed_from_almanac",
+    "last_updated": "2026-06-28"
+  },
+  {
+    "id": "company-corona-coal-and-iron-company",
+    "name": "Corona Coal and Iron Company",
+    "type": "mining-company",
+    "county_context": "Walker County, Alabama",
+    "summary": "Corona Coal and Iron Company is referenced in existing Walker County Almanac mining-related community records.",
+    "linked_communities": [
+      {
+        "community": "Coal Valley",
+        "article_id": "community-coal-valley",
+        "url": "http://127.0.0.1:5081/article/community-coal-valley"
+      },
+      {
+        "community": "Corona",
+        "article_id": "community-corona",
+        "url": "http://127.0.0.1:5081/article/community-corona"
+      }
+    ],
+    "evidence_basis": "Company name appears in existing Almanac article text or tags.",
+    "research_status": "source_backed_from_almanac",
+    "last_updated": "2026-06-28"
+  },
+  {
+    "id": "company-walker-coal-company",
+    "name": "Walker Coal Company",
+    "type": "mining-company",
+    "county_context": "Walker County, Alabama",
+    "summary": "Walker Coal Company is referenced in existing Walker County Almanac mining-related community records.",
+    "linked_communities": [
+      {
+        "community": "Labuco",
+        "article_id": "community-labuco",
+        "url": "http://127.0.0.1:5081/article/community-labuco"
+      },
+      {
+        "community": "Quinton",
+        "article_id": "community-quinton",
+        "url": "http://127.0.0.1:5081/article/community-quinton"
+      }
+    ],
+    "evidence_basis": "Company name appears in existing Almanac article text or tags.",
+    "research_status": "source_backed_from_almanac",
+    "last_updated": "2026-06-28"
+  }
+]
