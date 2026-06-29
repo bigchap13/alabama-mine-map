@@ -217,3 +217,41 @@ input {
   color: var(--muted);
   margin-top: 4px;
 }
+
+.map-shell {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  margin-bottom: 18px;
+  background: var(--panel);
+}
+
+#mineMap {
+  width: 100%;
+  height: 62vh;
+  min-height: 430px;
+}
+
+.leaflet-popup-content {
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.leaflet-popup-content p {
+  color: #333;
+}
+
+.map-record {
+  border-top: 1px solid var(--line);
+  padding: 14px 0;
+}
+
+.map-record strong,
+.map-record small {
+  display: block;
+}
+
+.map-record small {
+  color: var(--muted);
+  margin-top: 4px;
+}
