@@ -94,10 +94,11 @@ function renderMap() {
     points.length ? "Showing clustered source-backed Alabama mine locations." : "No mines match the current filters.";
 
   document.getElementById("mineList").innerHTML = points.slice(0, 80).map(p => `
-    <button class="map-record mine-row" data-id="${p.id}">
+    <a class="map-record mine-row"
+       href="/mine/${p.id}">
       <strong>${p.name}</strong>
       <small>${p.county || "Alabama"} • ${p.mine_type || "Mine"} • ${p.status || "status unknown"}</small>
-    </button>
+    </a>
   `).join("");
 
   document.querySelectorAll(".mine-row").forEach(row => {

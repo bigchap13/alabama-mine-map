@@ -329,3 +329,24 @@ input {
   color: #111;
   font-weight: 900;
 }
+
+.mine-row{
+    display:block;
+    text-decoration:none;
+    color:inherit;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.mine-row:last-child{
+    border-bottom:0;
+}
+
+.mine-row strong{
+    display:block;
+    margin-bottom:4px;
+}
+
+.mine-row:hover{
+    opacity:.88;
+}
