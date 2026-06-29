@@ -334,12 +334,32 @@ def create_app():
 
     @app.route("/api/status")
     def api_status():
+        mines = load_json(REGISTRIES["mines"])
+
+        counties = {
+            r.get("county")
+            for r in mines
+            if r.get("county")
+        }
+
+        companies = set()
+        for r in mines:
+            if r.get("operator"):
+                companies.add(company_slug(r["operator"]))
+            if r.get("controller"):
+                companies.add(company_slug(r["controller"]))
+
         return jsonify({
             "app": "Alabama Mining Encyclopedia",
             "status": "mines_only_foundation",
-            "port": 5084,
             "scope": "All Alabama mines, past and present. Source-backed mine records only.",
-            "counts": registry_counts(),
+            "port": 5084,
+            "counts": {
+                "mines": len(mines),
+                "counties": len(counties),
+                "companies": len(companies),
+                "sources": len(load_json(REGISTRIES["sources"]))
+            }
         })
 
     @app.route("/api/search")
