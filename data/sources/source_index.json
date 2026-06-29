@@ -1,7 +1,7 @@
 [
   {
-    "id": "source-alabama-mine-map-repository",
-    "title": "Alabama Mine Map Repository",
+    "id": "source-alabama-mining-encyclopedia-repository",
+    "title": "Alabama Mining Encyclopedia Repository",
     "publisher": "Alabama Department of Labor",
     "type": "mine-map-repository",
     "status": "priority_source"

@@ -1,4 +1,4 @@
-# Alabama Mine Map Roadmap
+# Alabama Mining Encyclopedia Roadmap
 
 ## Phase 1 — Foundation
 
@@ -20,7 +20,7 @@
 
 ## Phase 3 — Data Import
 
-- Alabama Mine Map Repository references
+- Alabama Mining Encyclopedia Repository references
 - Historic mining companies
 - Walker County coal camps
 - Mine-map source index

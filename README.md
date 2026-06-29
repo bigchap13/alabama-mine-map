@@ -1,6 +1,6 @@
-# Alabama Mine Map
+# Alabama Mining Encyclopedia
 
-Alabama Mine Map is the dedicated mining-history and mine-intelligence system for Walker County, Alabama.
+Alabama Mining Encyclopedia is the dedicated mining-history and mine-intelligence system for Walker County, Alabama.
 
 It documents coal mines, mining companies, coal camps, railroad connections, mine maps, mining communities, industrial sites, mine disasters, production history, and related historical geography.
 
@@ -8,7 +8,7 @@ It documents coal mines, mining companies, coal camps, railroad connections, min
 
 - Walker County Atlas answers: Where is it?
 - Walker County Almanac answers: What is it?
-- Alabama Mine Map answers: What was mined there, who mined it, and what did it connect to?
+- Alabama Mining Encyclopedia answers: What was mined there, who mined it, and what did it connect to?
 - Walker County Cold Case Encyclopedia answers: What happened?
 - Walker County Hub connects the systems.
 

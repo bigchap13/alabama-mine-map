@@ -335,7 +335,7 @@ def create_app():
     @app.route("/api/status")
     def api_status():
         return jsonify({
-            "app": "Alabama Mine Map",
+            "app": "Alabama Mining Encyclopedia",
             "status": "mines_only_foundation",
             "port": 5084,
             "scope": "All Alabama mines, past and present. Source-backed mine records only.",
@@ -352,6 +352,6 @@ def create_app():
 
     @app.route("/health")
     def health():
-        return jsonify({"status": "ok", "project": "alabama-mine-map"})
+        return jsonify({"status": "ok", "project": "alabama-mining-encyclopedia"})
 
     return app

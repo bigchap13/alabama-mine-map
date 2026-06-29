@@ -208,7 +208,7 @@
     ],
     "source_file": "/data/data/com.termux/files/home/walker-county-almanac/data/articles/communities/community_coal_valley.json",
     "source_titles": [
-      "Alabama Mine Map Repository",
+      "Alabama Mining Encyclopedia Repository",
       "Walker County historical references"
     ],
     "research_status": "source_backed_from_almanac",
@@ -341,7 +341,7 @@
     "source_file": "/data/data/com.termux/files/home/walker-county-almanac/data/articles/communities/community_corona.json",
     "source_titles": [
       "Corona, Alabama",
-      "Alabama Mine Map Repository",
+      "Alabama Mining Encyclopedia Repository",
       "Walker County highway map"
     ],
     "research_status": "source_backed_from_almanac",
@@ -519,7 +519,7 @@
     "source_titles": [
       "Empire",
       "Walker County",
-      "Alabama Mine Map Repository"
+      "Alabama Mining Encyclopedia Repository"
     ],
     "research_status": "source_backed_from_almanac",
     "last_updated": "2026-06-28"
@@ -852,7 +852,7 @@
     "source_file": "/data/data/com.termux/files/home/walker-county-almanac/data/articles/communities/community_labuco.json",
     "source_titles": [
       "Labuco",
-      "Alabama Mine Map Repository"
+      "Alabama Mining Encyclopedia Repository"
     ],
     "research_status": "source_backed_from_almanac",
     "last_updated": "2026-06-28"
@@ -943,7 +943,7 @@
     ],
     "source_file": "/data/data/com.termux/files/home/walker-county-almanac/data/articles/communities/community_manchester.json",
     "source_titles": [
-      "Alabama Mine Map Repository",
+      "Alabama Mining Encyclopedia Repository",
       "Walker County historical references",
       "GNIS"
     ],
@@ -1174,7 +1174,7 @@
     "source_titles": [
       "Geographic Names Information System",
       "Walker County historical references",
-      "Alabama Mine Map Repository"
+      "Alabama Mining Encyclopedia Repository"
     ],
     "research_status": "source_backed_from_almanac",
     "last_updated": "2026-06-28"
