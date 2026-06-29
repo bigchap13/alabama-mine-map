@@ -142,8 +142,13 @@ def county_index():
     ]
 
 
+def clean_company_name(name):
+    return " ".join(str(name or "").replace(";", "; ").split())
+
+
 def company_slug(name):
-    return str(name or "").strip().lower().replace("&", "and").replace(".", "").replace(",", "").replace(" ", "-")
+    cleaned = clean_company_name(name)
+    return cleaned.lower().replace("&", "and").replace(".", "").replace(",", "").replace(";", "").replace(" ", "-")
 
 
 def company_mines(company):
@@ -169,7 +174,7 @@ def company_index():
 
             if slug not in companies:
                 companies[slug] = {
-                    "name": name,
+                    "name": clean_company_name(name),
                     "slug": slug,
                     "count": 0,
                     "aliases": set(),
@@ -182,7 +187,7 @@ def company_index():
     for item in companies.values():
         aliases = sorted(item["aliases"])
         out.append({
-            "name": item["name"],
+            "name": clean_company_name(item["name"]),
             "slug": item["slug"],
             "count": item["count"],
             "aliases": aliases,
