@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ company }} | Alabama Mine Map</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="circle linkcircle" href="/companies">‹</a>
+    <strong>{{ company }}</strong>
+    <a class="circle linkcircle" href="/mine-map">⌖</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Company mine page</p>
+      <h1>{{ company }}</h1>
+      <p>{{ stats.total }} source-backed Alabama mine records linked by operator or controller.</p>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <span>Total Mines</span>
+        <h2>{{ stats.total }}</h2>
+      </div>
+      <div class="card">
+        <span>Counties</span>
+        <h2>{{ stats.counties|length }}</h2>
+      </div>
+      <div class="card">
+        <span>Status Groups</span>
+        <h2>{{ stats.statuses|length }}</h2>
+      </div>
+      <div class="card">
+        <span>Mine Types</span>
+        <h2>{{ stats.types|length }}</h2>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <span>County Breakdown</span>
+      {% for label, count in stats.counties %}
+        <p><strong>{{ label }}</strong>: {{ count }}</p>
+      {% endfor %}
+    </section>
+
+    <section class="card wide">
+      <span>Status Breakdown</span>
+      {% for label, count in stats.statuses %}
+        <p><strong>{{ label }}</strong>: {{ count }}</p>
+      {% endfor %}
+    </section>
+
+    <section class="card">
+      <span>Mine Records</span>
+      <h2>{{ records|length }} records</h2>
+      {% for mine in records %}
+        <a class="map-record mine-row" href="/mine/{{ mine.id }}">
+          <strong>{{ mine.name }}</strong>
+          <small>{{ mine.county or "Alabama" }} • {{ mine.mine_type or mine.type or "Mine" }} • {{ mine.status or "Unknown" }}</small>
+        </a>
+      {% endfor %}
+    </section>
+  </main>
+</body>
+</html>

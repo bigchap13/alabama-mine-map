@@ -142,6 +142,55 @@ def county_index():
     ]
 
 
+def company_slug(name):
+    return str(name or "").strip().lower().replace("&", "and").replace(".", "").replace(",", "").replace(" ", "-")
+
+
+def company_mines(company):
+    wanted = company_slug(company)
+    return [
+        item for item in load_json(REGISTRIES["mines"])
+        if company_slug(item.get("operator")) == wanted
+        or company_slug(item.get("controller")) == wanted
+    ]
+
+
+def company_index():
+    counts = {}
+    for r in load_json(REGISTRIES["mines"]):
+        for name in [r.get("operator"), r.get("controller")]:
+            if not name:
+                continue
+            counts[name] = counts.get(name, 0) + 1
+
+    return [
+        {
+            "name": name,
+            "slug": company_slug(name),
+            "count": count,
+        }
+        for name, count in sorted(counts.items(), key=lambda x: (-x[1], x[0]))
+    ]
+
+
+def company_stats(records):
+    counties = {}
+    statuses = {}
+    types = {}
+
+    for r in records:
+        counties[r.get("county") or "Unknown"] = counties.get(r.get("county") or "Unknown", 0) + 1
+        statuses[r.get("status") or "Unknown"] = statuses.get(r.get("status") or "Unknown", 0) + 1
+        types[r.get("mine_type") or r.get("type") or "Unknown"] = types.get(r.get("mine_type") or r.get("type") or "Unknown", 0) + 1
+
+    return {
+        "total": len(records),
+        "counties": sorted(counties.items(), key=lambda x: (-x[1], x[0])),
+        "statuses": sorted(statuses.items(), key=lambda x: (-x[1], x[0])),
+        "types": sorted(types.items(), key=lambda x: (-x[1], x[0])),
+    }
+
+
 def mine_map_points():
     points = []
     for item in load_json(REGISTRIES["mines"]):
@@ -185,6 +234,39 @@ def create_app():
     @app.route("/mine-map")
     def mine_map_page():
         return render_template("mine_map.html")
+
+    @app.route("/companies")
+    def companies_page():
+        companies = company_index()
+        return render_template("companies.html", companies=companies)
+
+    @app.route("/company/<company>")
+    def company_page(company):
+        records = company_mines(company)
+        if not records:
+            return render_template("company.html", company=company.title(), records=[], stats=company_stats([])), 404
+
+        label = None
+        wanted = company_slug(company)
+        for r in records:
+            if company_slug(r.get("operator")) == wanted:
+                label = r.get("operator")
+                break
+            if company_slug(r.get("controller")) == wanted:
+                label = r.get("controller")
+                break
+
+        return render_template("company.html", company=label or company.title(), records=records, stats=company_stats(records))
+
+    @app.route("/api/company/<company>")
+    def api_company(company):
+        records = company_mines(company)
+        return jsonify({
+            "company": company,
+            "count": len(records),
+            "stats": company_stats(records),
+            "mines": records,
+        })
 
     @app.route("/counties")
     def counties_page():

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mining Companies | Alabama Mine Map</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="circle linkcircle" href="/">‹</a>
+    <strong>Mining Companies</strong>
+    <span class="circle">⛏️</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Operator and controller index</p>
+      <h1>Mining Companies</h1>
+      <p>Operators and controllers connected to source-backed Alabama mine records.</p>
+    </section>
+
+    <section class="card">
+      <span>Companies</span>
+      <h2>{{ companies|length }} names</h2>
+      {% for c in companies %}
+        <a class="map-record mine-row" href="/company/{{ c.slug }}">
+          <strong>{{ c.name }}</strong>
+          <small>{{ c.count }} linked mine records</small>
+        </a>
+      {% endfor %}
+    </section>
+  </main>
+</body>
+</html>
