@@ -100,6 +100,48 @@ def find_mine_record(mine_id):
     return None
 
 
+def county_slug(name):
+    return str(name or "").strip().lower().replace(" ", "-")
+
+
+def county_mines(county):
+    wanted = county_slug(county)
+    return [
+        item for item in load_json(REGISTRIES["mines"])
+        if county_slug(item.get("county")) == wanted
+    ]
+
+
+def county_stats(records):
+    statuses = {}
+    types = {}
+    operators = {}
+
+    for r in records:
+        statuses[r.get("status") or "Unknown"] = statuses.get(r.get("status") or "Unknown", 0) + 1
+        types[r.get("mine_type") or r.get("type") or "Unknown"] = types.get(r.get("mine_type") or r.get("type") or "Unknown", 0) + 1
+        operators[r.get("operator") or "Unknown"] = operators.get(r.get("operator") or "Unknown", 0) + 1
+
+    return {
+        "total": len(records),
+        "statuses": sorted(statuses.items(), key=lambda x: (-x[1], x[0])),
+        "types": sorted(types.items(), key=lambda x: (-x[1], x[0])),
+        "operators": sorted(operators.items(), key=lambda x: (-x[1], x[0]))[:12],
+    }
+
+
+def county_index():
+    names = sorted(set(r.get("county") for r in load_json(REGISTRIES["mines"]) if r.get("county")))
+    return [
+        {
+            "name": name,
+            "slug": county_slug(name),
+            "count": len(county_mines(name)),
+        }
+        for name in names
+    ]
+
+
 def mine_map_points():
     points = []
     for item in load_json(REGISTRIES["mines"]):
@@ -143,6 +185,29 @@ def create_app():
     @app.route("/mine-map")
     def mine_map_page():
         return render_template("mine_map.html")
+
+    @app.route("/counties")
+    def counties_page():
+        counties = county_index()
+        return render_template("counties.html", counties=counties)
+
+    @app.route("/county/<county>")
+    def county_page(county):
+        records = county_mines(county)
+        if not records:
+            return render_template("county.html", county=county.title(), records=[], stats=county_stats([])), 404
+        label = records[0].get("county") or county.title()
+        return render_template("county.html", county=label, records=records, stats=county_stats(records))
+
+    @app.route("/api/county/<county>")
+    def api_county(county):
+        records = county_mines(county)
+        return jsonify({
+            "county": county,
+            "count": len(records),
+            "stats": county_stats(records),
+            "mines": records,
+        })
 
     @app.route("/mine/<mine_id>")
     def mine_detail_page(mine_id):

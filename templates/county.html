@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ county }} County | Alabama Mine Map</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="circle linkcircle" href="/counties">‹</a>
+    <strong>{{ county }} County</strong>
+    <a class="circle linkcircle" href="/mine-map">⌖</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">County mine page</p>
+      <h1>{{ county }} County</h1>
+      <p>{{ stats.total }} source-backed mine records in {{ county }} County, Alabama.</p>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <span>Total Mines</span>
+        <h2>{{ stats.total }}</h2>
+      </div>
+      <div class="card">
+        <span>Mine Types</span>
+        <h2>{{ stats.types|length }}</h2>
+      </div>
+      <div class="card">
+        <span>Status Groups</span>
+        <h2>{{ stats.statuses|length }}</h2>
+      </div>
+      <div class="card">
+        <span>Operators</span>
+        <h2>{{ stats.operators|length }}</h2>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <span>Status Breakdown</span>
+      {% for label, count in stats.statuses %}
+        <p><strong>{{ label }}</strong>: {{ count }}</p>
+      {% endfor %}
+    </section>
+
+    <section class="card wide">
+      <span>Mine Type Breakdown</span>
+      {% for label, count in stats.types %}
+        <p><strong>{{ label }}</strong>: {{ count }}</p>
+      {% endfor %}
+    </section>
+
+    <section class="card wide">
+      <span>Top Operators</span>
+      {% for label, count in stats.operators %}
+        <p><strong>{{ label }}</strong>: {{ count }}</p>
+      {% endfor %}
+    </section>
+
+    <section class="card">
+      <span>Mine Records</span>
+      <h2>{{ records|length }} records</h2>
+      {% for mine in records %}
+        <a class="map-record mine-row" href="/mine/{{ mine.id }}">
+          <strong>{{ mine.name }}</strong>
+          <small>{{ mine.mine_type or mine.type or "Mine" }} • {{ mine.status or "Unknown" }} • {{ mine.operator or "Unknown operator" }}</small>
+        </a>
+      {% endfor %}
+    </section>
+  </main>
+</body>
+</html>

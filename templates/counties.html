@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alabama Mine Counties</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="circle linkcircle" href="/">‹</a>
+    <strong>Mine Counties</strong>
+    <span class="circle">⛏️</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">County index</p>
+      <h1>Alabama Mine Counties</h1>
+      <p>County-by-county mine records from the source-backed Alabama Mine Map registry.</p>
+    </section>
+
+    <section class="card">
+      <span>Counties</span>
+      <h2>{{ counties|length }} counties</h2>
+      <div class="county-list">
+        {% for c in counties %}
+          <a class="map-record mine-row" href="/county/{{ c.slug }}">
+            <strong>{{ c.name }} County</strong>
+            <small>{{ c.count }} mine records</small>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+</body>
+</html>
