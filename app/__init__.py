@@ -9,6 +9,7 @@ REGISTRIES = {
     "companies": ROOT / "data/companies/company_registry.json",
     "counties": ROOT / "data/counties/county_index.json",
     "sources": ROOT / "data/sources/source_index.json",
+    "coal_camps": ROOT / "data/registries/coal_camps.json",
 }
 
 
@@ -197,6 +198,22 @@ def company_index():
     return sorted(out, key=lambda x: (-x["count"], x["name"]))
 
 
+def coal_camp_slug(name):
+    return str(name or "").strip().lower().replace("&", "and").replace(".", "").replace(",", "").replace(" ", "-")
+
+
+def coal_camp_index():
+    camps = load_json(REGISTRIES["coal_camps"])
+    return sorted(camps, key=lambda x: x.get("name", ""))
+
+
+def find_coal_camp(camp_id):
+    for camp in load_json(REGISTRIES["coal_camps"]):
+        if camp.get("id") == camp_id or coal_camp_slug(camp.get("name")) == camp_id:
+            return camp
+    return None
+
+
 def company_stats(records):
     counties = {}
     statuses = {}
@@ -258,6 +275,28 @@ def create_app():
     @app.route("/mine-map")
     def mine_map_page():
         return render_template("mine_map.html")
+
+    @app.route("/coal-camps")
+    def coal_camps_page():
+        return render_template("coal_camps.html")
+
+    @app.route("/api/coal-camps")
+    def api_coal_camps():
+        return jsonify(coal_camp_index())
+
+    @app.route("/coal-camp/<camp_id>")
+    def coal_camp_page(camp_id):
+        camp = find_coal_camp(camp_id)
+        if not camp:
+            return render_template("coal_camp.html", camp=None), 404
+        return render_template("coal_camp.html", camp=camp)
+
+    @app.route("/api/coal-camp/<camp_id>")
+    def api_coal_camp(camp_id):
+        camp = find_coal_camp(camp_id)
+        if not camp:
+            return jsonify({"error": "coal camp not found"}), 404
+        return jsonify(camp)
 
     @app.route("/companies")
     def companies_page():

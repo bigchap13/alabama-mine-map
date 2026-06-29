@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ camp.name if camp else "Coal Camp Not Found" }} | Alabama Mining Encyclopedia</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="circle linkcircle" href="/coal-camps">‹</a>
+    <strong>Coal Camp Detail</strong>
+    <span class="circle">🏘️</span>
+  </header>
+
+  <main>
+    {% if not camp %}
+      <section class="hero">
+        <p class="eyebrow">Not found</p>
+        <h1>Coal camp not found</h1>
+        <p>No source-backed coal camp record matched that ID.</p>
+      </section>
+    {% else %}
+      <section class="hero">
+        <p class="eyebrow">{{ camp.county or "Alabama" }}</p>
+        <h1>{{ camp.name }}</h1>
+        <p>{{ camp.summary }}</p>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <span>County</span>
+          <h2>{{ camp.county or "Unknown" }}</h2>
+        </div>
+        <div class="card">
+          <span>Company</span>
+          <h2>{{ camp.company or "Unknown" }}</h2>
+        </div>
+        <div class="card">
+          <span>Railroad</span>
+          <h2>{{ camp.railroad or "Unknown" }}</h2>
+        </div>
+        <div class="card">
+          <span>Status</span>
+          <h2>{{ camp.status or "Unknown" }}</h2>
+        </div>
+      </section>
+
+      <section class="card wide">
+        <span>Linked Mines</span>
+        {% for mine in camp.mines or [] %}
+          <a class="map-record mine-row" href="/mine/{{ mine }}">{{ mine }}</a>
+        {% else %}
+          <p>No linked mine records yet.</p>
+        {% endfor %}
+      </section>
+
+      <section class="card wide">
+        <span>Sources</span>
+        {% for source in camp.sources or [] %}
+          <p>{{ source }}</p>
+        {% else %}
+          <p>No source entries loaded.</p>
+        {% endfor %}
+      </section>
+    {% endif %}
+  </main>
+</body>
+</html>

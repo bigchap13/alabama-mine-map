@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coal Camp Encyclopedia | Alabama Mining Encyclopedia</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="circle linkcircle" href="/">‹</a>
+    <strong>Coal Camps</strong>
+    <span class="circle">🏘️</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Coal Camp Encyclopedia</p>
+      <h1>Alabama Coal Camps</h1>
+      <p>Source-backed coal camp records only. No unsourced placeholders.</p>
+    </section>
+
+    <section class="card map-controls">
+      <input id="campSearch" type="search" placeholder="Search coal camp, county, company...">
+    </section>
+
+    <section class="card">
+      <span>Coal Camps</span>
+      <h2 id="campCount">Loading...</h2>
+      <p id="campNote">Coal camp records will appear here after source-backed entries are added.</p>
+      <div id="campList"></div>
+    </section>
+  </main>
+
+  <script src="/static/js/coal_camps.js"></script>
+</body>
+</html>
